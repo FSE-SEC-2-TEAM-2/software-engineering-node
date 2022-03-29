@@ -31,13 +31,28 @@ export class LikeDao implements LikeDaoI {
     public async findAllTuitsLikedByUser(uid: string): Promise<Like[]> {
         return LikeModel
             .find({likedBy: uid})
-            .populate("tuit");
+            .populate({
+                path: 'tuit',
+                populate: {
+                    path: 'postedBy',
+                },
+            })
     }
 
     public async findAllUsersThatLikedTuit(tid: string): Promise<Like[]> {
         return LikeModel
             .find({tuit: tid})
             .populate("likedBy", {password: 0});
+    }
+
+    public async countLikedTuits(tid: string): Promise<number> {
+        return LikeModel
+            .count({tuit: tid});
+    }
+
+    public async checkIfUserLikedTuit(tid: string, uid: string): Promise<boolean> {
+        const record = await LikeModel.find({tuit: tid, likedBy: uid});
+        return record.length != 0;
     }
 
     public async userLikesTuit(uid: string, tid: string): Promise<Like> {

@@ -16,6 +16,13 @@ export interface TuitControllerI {
     createTuit(req: Request, res: Response): void;
 
     /**
+     * Creates a {@link Tuit}
+     * @param req {Request} - Request containing the contents of Tuit to be created
+     * @param res {Response} - Response containing the created Tuit
+     */
+    createTuitByUser(req: Request, res: Response): void;
+
+    /**
      * Sends all the {@link Tuit}s as a JSON Response
      * @param req {Request} - The request received
      * @param res {Response} - Response containing all the Tuits

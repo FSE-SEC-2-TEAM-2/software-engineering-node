@@ -52,6 +52,7 @@ export class TuitController implements TuitControllerI {
             app.use(bodyParser.json());
 
             app.post("/tuits", TuitController.tuitController.createTuit);
+            app.post("/users/:uid/tuits", TuitController.tuitController.createTuitByUser);
             app.get("/tuits", TuitController.tuitController.findAllTuits);
             app.get("/tuits/:tid", TuitController.tuitController.findTuitById);
             app.get("/users/:uid/tuits", TuitController.tuitController.findTuitsByUser);
@@ -62,36 +63,64 @@ export class TuitController implements TuitControllerI {
     }
 
     public createTuit(req: Request, res: Response): void {
+        console.info(`tuit: createTuit() ${req.body}`)
+
         TuitController.tuitDao.createTuit(req.body)
             .then((tuit: Tuit) => res.json(tuit))
             .catch((status) => res.json(status));
     }
 
+    public createTuitByUser(req: Request, res: Response): void {
+        console.info(`tuit: createTuitByUser() ${req.params.uid}`)
+
+        // @ts-ignore
+        let uid = req.params.uid === "session" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
+
+
+        TuitController.tuitDao.createTuitByUser(req.body, uid)
+            .then((tuit: Tuit) => res.json(tuit))
+            .catch((status) => res.json(status));
+    }
+
     public deleteTuit(req: Request, res: Response): void {
+        console.info(`tuit: deleteTuit(${req.params.tid})`)
+
         TuitController.tuitDao.deleteTuit(req.params.tid)
             .then((status) => res.json(status))
             .catch((status) => res.json(status));
     }
 
     public findAllTuits(req: Request, res: Response): void {
+        console.info(`tuit: findAllTuits()`)
+
         TuitController.tuitDao.findAllTuits()
             .then((tuits: Tuit[]) => res.json(tuits))
             .catch((status) => res.json(status));
     }
 
     public findTuitById(req: Request, res: Response): void {
+        console.info(`tuit: findTuitById(${req.params.tid})`)
+
         TuitController.tuitDao.findTuitById(req.params.tid)
             .then((tuit: Tuit) => res.json(tuit))
             .catch((status) => res.json(status));
     }
 
     public findTuitsByUser(req: Request, res: Response): void {
-        TuitController.tuitDao.findTuitsByUser(req.params.uid)
+        console.info(`tuit: findTuitsByUser(${req.params.uid})`)
+
+        // @ts-ignore
+        let uid = req.params.uid === "session" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
+
+
+        TuitController.tuitDao.findTuitsByUser(uid)
             .then((tuits: Tuit[]) => res.json(tuits))
             .catch((status) => res.json(status));
     }
 
     public updateTuit(req: Request, res: Response): void {
+        console.info(`tuit: updateTuit(${req.params.tid}) ${req.body}`)
+
         TuitController.tuitDao.updateTuit(req.params.tid, req.body)
             .then((status) => res.json(status))
             .catch((status) => res.json(status));

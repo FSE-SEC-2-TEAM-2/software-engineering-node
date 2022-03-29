@@ -14,4 +14,12 @@ export interface Tuit {
     tuit: string;
     postedOn: Date;
     postedBy: User | null;
+    stats: TuitStats;
+}
+
+export interface TuitStats {
+    replies: number;
+    retuits: number;
+    likes: number;
+    dislikes: number;
 }

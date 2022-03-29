@@ -50,14 +50,9 @@ export class BookmarkController implements BookmarkControllerI {
         return BookmarkController.bookmarkController;
     }
 
-    public findAllBookmarkedTuits(req: Request, res: Response): void {
-        BookmarkController.bookmarkDao
-            .findAllBookmarkedTuits(req.params.uid)
-            .then((bookmarkedTuits: Bookmark[]) => res.json(bookmarkedTuits))
-            .catch((status) => res.json(status));
-    }
-
     public userBookmarksTuit(req: Request, res: Response): void {
+        console.info(`bookmark: userBookmarksTuit(${req.params.uid}, ${req.params.tid})`)
+
         BookmarkController.bookmarkDao
             .userUnbookmarksTuits(req.params.uid, req.params.tid)
             .then(() => {
@@ -68,7 +63,18 @@ export class BookmarkController implements BookmarkControllerI {
             });
     }
 
+    public findAllBookmarkedTuits(req: Request, res: Response): void {
+        console.info(`bookmark: findAllBookmarkedTuits(${req.params.uid})`)
+
+        BookmarkController.bookmarkDao
+            .findAllBookmarkedTuits(req.params.uid)
+            .then((bookmarkedTuits: Bookmark[]) => res.json(bookmarkedTuits))
+            .catch((status) => res.json(status));
+    }
+
     public userUnbookmarksTuit(req: Request, res: Response): void {
+        console.info(`bookmark: userUnbookmarksTuit(${req.params.uid}, ${req.params.tid})`)
+
         BookmarkController.bookmarkDao
             .userUnbookmarksTuits(req.params.uid, req.params.tid)
             .then((status: object) => res.json(status))
@@ -76,6 +82,8 @@ export class BookmarkController implements BookmarkControllerI {
     }
 
     public userDeletesAllBookmarks(req: Request, res: Response): void {
+        console.info(`bookmark: userDeletesAllBookmarks(${req.params.uid})`)
+
         BookmarkController.bookmarkDao
             .userDeletesAllBookmarks(req.params.uid)
             .then((status: object) => res.json(status))

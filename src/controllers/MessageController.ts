@@ -48,36 +48,48 @@ export class MessageController implements MessageControllerI {
     }
 
     public userSendsMessage(req: Request, res: Response): void {
+        console.info(`message: userSendsMessage(${req.params.uid}) ${req.body}`)
+
         MessageController.messageDao.sendMessage(req.body, req.params.uid)
             .then((message: Message) => res.json(message))
             .catch((status) => res.json(status));
     }
 
     public userFetchesAllReceivedMessages(req: Request, res: Response): void {
+        console.info(`message: userFetchesAllReceivedMessages(${req.params.uid})`)
+
         MessageController.messageDao.findAllReceivedMessages(req.params.uid)
             .then((messages: Message[]) => res.json(messages))
             .catch((status) => res.json(status));
     }
 
     public userFetchesAllSentMessages(req: Request, res: Response): void {
+        console.info(`message: userFetchesAllSentMessages(${req.params.uid})`)
+
         MessageController.messageDao.findAllSentMessages(req.params.uid)
             .then((messages: Message[]) => res.json(messages))
             .catch((status) => res.json(status));
     }
 
     public userDeletesMessageById(req: Request, res: Response): void {
+        console.info(`message: userDeletesMessageById(${req.params.mid})`)
+
         MessageController.messageDao.deleteMessageById(req.params.mid)
             .then((status: object) => res.send(status))
             .catch((status) => res.json(status));
     }
 
     public userDeletesMessagesFromUser(req: Request, res: Response) {
+        console.info(`message: userDeletesMessagesFromUser(${req.params.sid}, ${req.params.rid})`)
+
         MessageController.messageDao.deleteMessagesFromUser(req.params.sid, req.params.rid)
             .then((status: object) => res.send(status))
             .catch((status) => res.json(status));
     }
 
     public userDeletesAllMessages(req: Request, res: Response) {
+        console.info(`message: userDeletesAllMessages(${req.params.uid})`)
+
         MessageController.messageDao.deleteAllMessages(req.params.uid)
             .then((status: object) => res.send(status))
             .catch((status) => res.json(status));

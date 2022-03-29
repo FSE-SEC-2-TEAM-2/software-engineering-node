@@ -1,7 +1,7 @@
 /**
  * @file Implements APIs for Tuit related data access object methods
  */
-import {Tuit} from "../models/Tuit";
+import {Tuit, TuitStats} from "../models/Tuit";
 import {TuitModel} from "../mongoose/tuit/TuitModel";
 import {TuitDaoI} from "../interfaces/tuit/TuitDaoI";
 import {UserDao} from "./UserDao";
@@ -32,6 +32,13 @@ export class TuitDao implements TuitDaoI {
             .create(tuit);
     }
 
+    public async createTuitByUser(tuit: Tuit, uid: string): Promise<Tuit> {
+        tuit.postedBy = await UserDao.getInstance()
+            .findUserById(uid);
+        return TuitModel
+            .create(tuit);
+    }
+
     public async deleteTuit(tid: string): Promise<object> {
         return TuitModel
             .deleteOne({_id: tid});
@@ -54,11 +61,17 @@ export class TuitDao implements TuitDaoI {
             .findUserById(uid);
 
         return TuitModel
-            .find({postedBy: user});
+            .find({postedBy: user})
+            .populate("postedBy", {password: 0});
     }
 
     public async updateTuit(tid: string, tuit: Tuit): Promise<object> {
         return TuitModel.updateOne({_id: tid}, {$set: tuit});
+    }
+
+    public async updateTuitStats(tid: string, newStats: TuitStats): Promise<object> {
+        return TuitModel
+            .updateOne({_id: tid}, {$set: {stats: newStats}});
     }
 
 }

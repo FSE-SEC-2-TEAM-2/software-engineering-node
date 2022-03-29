@@ -27,16 +27,51 @@ export interface UserControllerI {
     findUserById(req: Request, res: Response): void;
 
     /**
-     * Updates a {@link User}
+     * Sends the {@link User} with the given username as a JSON
+     * @param req {Request} - Request containing the username of the User
+     * @param res {Response} - Response containing the User
+     */
+    findUserByUsername(req: Request, res: Response): void;
+
+    /**
+     * Sends the {@link User} with the given username and password as a JSON
+     * @param req {Request} - Request containing the username and password of the User
+     * @param res {Response} - Response containing the User
+     */
+    findUserByCredentials(req: Request, res: Response): void;
+
+    /**
+     * Updates a {@link User} with their UID
      * @param req {Request} - Request containing the contents of User to be updated
      * @param res {Response} - Response containing the updated User
      */
-    updateUser(req: Request, res: Response): void;
+    updateUserById(req: Request, res: Response): void;
 
     /**
-     * Deletes a {@link User}
+     * Updates a {@link User} with their username
+     * @param req {Request} - Request containing the contents of User to be updated
+     * @param res {Response} - Response containing the updated User
+     */
+    updateUserByUsername(req: Request, res: Response): void;
+
+    /**
+     * Deletes all Users
+     * @param req {Request} - Request made to the API
+     * @param res {Response} - Response containing the status of the delete operation
+     */
+    deleteAllUsers(req: Request, res: Response): void;
+
+    /**
+     * Deletes a {@link User} by UID
      * @param req {Request} - Request containing the uid of User to be deleted
      * @param res {Response} - Response containing the status of the delete operation
      */
-    deleteUser(req: Request, res: Response): void;
+    deleteUserById(req: Request, res: Response): void;
+
+    /**
+     * Deletes a {@link User} by username
+     * @param req {Request} - Request containing the username of User to be deleted
+     * @param res {Response} - Response containing the status of the delete operation
+     */
+    deleteUserByUsername(req: Request, res: Response): void;
 }

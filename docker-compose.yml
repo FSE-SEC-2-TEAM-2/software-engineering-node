@@ -5,6 +5,8 @@ services:
     image: mongo:5
     restart: unless-stopped
     env_file: ./.env
+    logging:
+      driver: none
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
@@ -14,7 +16,7 @@ services:
       - db:/data/db
     networks:
       - link-network
-  node:
+  express-node:
     depends_on:
       - mongodb
     build: .

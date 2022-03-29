@@ -25,28 +25,55 @@ export class UserDao implements UserDaoI {
         return this.userDao;
     }
 
-    public async findAllUsers(): Promise<User[]> {
-        return UserModel
-            .find().select({password: 0});
-    }
-
-    public async findUserById(uid: string): Promise<User> {
-        return UserModel
-            .findById(uid).select({password: 0});
-    }
-
     public async createUser(user: User): Promise<User> {
         return UserModel
             .create(user);
     }
 
-    public async deleteUser(uid: string): Promise<object> {
+    public async findAllUsers(): Promise<User[]> {
+        return UserModel
+            .find();
+            // .select({password: 0});
+    }
+
+    public async findUserById(uid: string): Promise<User> {
+        return UserModel
+            .findById(uid);
+            // .select({password: 0});
+    }
+
+    public async findUserByUsername(uname: string): Promise<User> {
+        return UserModel
+            .findOne({username: uname});
+            // .select({password: 0});
+    }
+
+    public async findUserByCredentials(username: string, password: string): Promise<User> {
+        return UserModel.findOne({username: username, password: password});
+    }
+
+    public async updateUserById(uid: string, user: User): Promise<object> {
+        return UserModel
+            .updateOne({_id: uid}, {$set: user});
+    }
+
+    public async updateUserByUsername(uname: string, user: User): Promise<object> {
+        return UserModel
+            .updateOne({username: uname}, {$set: user});
+    }
+
+    public async deleteAllUsers(): Promise<object> {
+        return UserModel
+            .deleteMany();
+    }
+
+    public async deleteUserById(uid: string): Promise<object> {
         return UserModel
             .deleteOne({_id: uid});
     }
 
-    public async updateUser(uid: string, user: User): Promise<object> {
+    public async deleteUserByUsername(uname: string): Promise<object> {
         return UserModel
-            .updateOne({_id: uid}, {$set: user});
+            .deleteOne({username: uname});
     }
 }

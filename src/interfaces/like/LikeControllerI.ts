@@ -31,6 +31,14 @@ export interface LikeControllerI {
     userLikesTuit(req: Request, res: Response): void;
 
     /**
+     * Records the {@link User} toggling his like for a {@link Tuit} and sends the record written
+     * to the database as Response
+     * @param req {Request} - the Request containing the UID of the User and the TID of the toggled Tuit
+     * @param res {Response} - the Response containing record written to the database
+     */
+    userTogglesLike(req: Request, res: Response): void;
+
+    /**
      * Deletes the record of a {@link User} liking a {@link Tuit} and sends the status of the
      * operation as Response
      * @param req {Request} - the Request containing the UID of the User and the TID of the now unliked Tuit
