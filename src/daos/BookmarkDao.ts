@@ -4,6 +4,7 @@
 import {BookmarkDaoI} from "../interfaces/bookmark/BookmarkDaoI";
 import {Bookmark} from "../models/Bookmark";
 import {BookmarkModel} from "../mongoose/bookmark/BookmarkModel";
+import {LikeModel} from "../mongoose/like/LikeModel";
 
 /**
  * @class BookmarkDao Implements the BookmarkDaoI, with all the CRUD functionalities for the Bookmark resource
@@ -32,6 +33,16 @@ export class BookmarkDao implements BookmarkDaoI {
         return BookmarkModel
             .find({bookmarkedBy: uid})
             .populate("bookmarkedTuit", {"password": 0});
+    }
+
+    public async countBookmarkedUsers(tid: string): Promise<number> {
+        return BookmarkModel
+            .count({bookmarkedTuit: tid});
+    }
+
+    public async checkIfUserBookmarkedTuit(tid: string, uid: string): Promise<boolean> {
+        const record = await BookmarkModel.find({bookmarkedTuit: tid, bookmarkedBy: uid});
+        return record.length != 0;
     }
 
     public async userBookmarksTuit(uid: string, tid: string): Promise<Bookmark> {
