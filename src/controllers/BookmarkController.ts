@@ -114,7 +114,11 @@ export class BookmarkController implements BookmarkControllerI {
 
         BookmarkController.bookmarkDao
             .findAllBookmarkedTuits(uid)
-            .then((bookmarkedTuits: Bookmark[]) => res.json(bookmarkedTuits.map(tuit => tuit.bookmarkedTuit)))
+            .then((bookmarks) => {
+                const nonNullTuits =
+                    bookmarks.filter(bookmark => bookmark.bookmarkedTuit);
+                res.json(nonNullTuits.map(bookmark => bookmark.bookmarkedTuit));
+            })
             .catch((status) => res.json(status));
     }
 

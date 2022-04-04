@@ -30,10 +30,11 @@ export class BookmarkDao implements BookmarkDaoI {
     }
 
     public async findAllBookmarkedTuits(uid: string): Promise<Bookmark[]> {
+        console.log("findAllBookmarkedTuits")
         return BookmarkModel
             .find({ bookmarkedBy: uid })
             .populate({
-                path: 'bookmarkedTuits',
+                path: 'bookmarkedTuit',
                 populate: {
                     path: 'postedBy',
                 },
