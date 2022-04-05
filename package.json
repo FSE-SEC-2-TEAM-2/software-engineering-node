@@ -7,7 +7,7 @@
     "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions",
     "start": "node build/server.js",
     "dev": "nodemon src/server.ts",
-    "docker": "docker-compose up --build --remove-orphans",
+    "docker": "docker-compose up --build --remove-orphans --force-recreate",
     "build": "tsc --project ./",
     "test": "echo \"Warn: no test specified\" ",
     "docs": "typedoc --entryPointStrategy expand ./src"
