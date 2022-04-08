@@ -22,10 +22,6 @@ export interface BookmarkDaoI {
      */
     userBookmarksTuit(uid: string, tid: string): Promise<Bookmark>;
 
-    countBookmarkedUsers(tid: string): Promise<Number>
-
-    checkIfUserBookmarkedTuit(tid: string, uid: string): Promise<boolean>
-
     /**
      * Deletes the record representing a {@link User} bookmarking a
      * {@link Tuit}, and returns the states of the operation
