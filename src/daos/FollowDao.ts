@@ -54,4 +54,10 @@ export class FollowDao implements FollowDaoI {
         return FollowModel
             .deleteMany({userFollowing: followingUid});
     }
+
+    public async userIsFollowingUser(followingUid: string, followedUid: string): Promise<boolean> {
+        const record = await FollowModel.find({userFollowing: followingUid, userFollowed: followedUid});
+        return record.length != 0;
+    }
+
 }
