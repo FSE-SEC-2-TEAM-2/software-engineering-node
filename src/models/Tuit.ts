@@ -22,4 +22,5 @@ export interface TuitStats {
     retuits: number;
     likes: number;
     dislikes: number;
+    bookmarks: number;
 }

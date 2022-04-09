@@ -15,7 +15,7 @@ export interface TuitDaoI {
      * @param tuit {Tuit} - the data to be used to create the Tuit
      * @return {Promise<Tuit>} - promise containing the Tuit created with the given data
      */
-    createTuit(tuit: Tuit): Promise<Tuit>;
+    createTuit(tuit: Tuit): Promise<Tuit | null>;
 
     /**
      * Creates a {@link Tuit} with the given data
@@ -23,7 +23,7 @@ export interface TuitDaoI {
      * @param uid - the UID of the user posting the Tuit
      * @return {Promise<Tuit>} - promise containing the Tuit created with the given data
      */
-    createTuitByUser(tuit: Tuit, uid:string): Promise<Tuit>;
+    createTuitByUser(tuit: Tuit, uid:string): Promise<Tuit | null>;
 
     /**
      * Returns all the {@link Tuit}s
@@ -43,7 +43,7 @@ export interface TuitDaoI {
      * @param tid {string} - the TID of the Tuit to be returned
      * @return {Promise<Tuit>} - promise containing the Tuit with the given TID
      */
-    findTuitById(tid: string): Promise<Tuit>;
+    findTuitById(tid: string): Promise<any>;
 
     /**
      * Updated the {@link Tuit} and returns the updated Tuit

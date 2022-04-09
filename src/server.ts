@@ -10,7 +10,6 @@ import {LikeController} from "./controllers/LikeController";
 import {DislikeController} from "./controllers/DislikeController";
 import {FollowController} from "./controllers/FollowController";
 import {BookmarkController} from "./controllers/BookmarkController";
-import {MessageController} from "./controllers/MessageController";
 import {AuthenticationController} from "./controllers/AuthenticationController";
 // import cors from 'cors';
 
@@ -87,7 +86,6 @@ const initializeApp = (): express.Express => {
     DislikeController.getInstance(app);
     FollowController.getInstance(app);
     BookmarkController.getInstance(app);
-    MessageController.getInstance(app);
     AuthenticationController.getInstance(app);
 
     return app
