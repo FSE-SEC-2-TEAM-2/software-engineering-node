@@ -50,6 +50,8 @@ export class FollowController implements FollowControllerI {
                 FollowController.followController.userUnfollowsUser);
             app.delete("/users/:following_uid/follows",
                 FollowController.followController.userUnfollowsAllUsers);
+            app.get("/users/:following_uid/following/:followed_uid",
+                FollowController.followController.userIsFollowingUser);
         }
         return FollowController.followController;
     }
@@ -129,6 +131,14 @@ export class FollowController implements FollowControllerI {
         FollowController
             .followDao.userUnfollowsAllUsers(req.params.following_uid)
             .then((status) => res.send(status))
+            .catch((status) => res.json(status));
+    }
+
+    public userIsFollowingUser(req: Request, res: Response): void {
+        console.info(`follow: userIsFollowingUser(${req.params.following_uid}, ${req.params.followed_uid})`)
+        FollowController
+            .followDao.userIsFollowingUser(req.params.following_uid, req.params.followed_uid)
+            .then((isFollowing: boolean) => res.send(isFollowing))
             .catch((status) => res.json(status));
     }
 }

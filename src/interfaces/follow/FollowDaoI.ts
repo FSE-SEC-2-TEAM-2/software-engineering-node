@@ -43,4 +43,13 @@ export interface FollowDaoI {
      * @return {Promise<object>} the status of the delete operation
      */
     userUnfollowsAllUsers(followerUid: string): Promise<object>;
+
+    /**
+     * Returns if there exists a record of the {@link User} following another user {@link User}
+     * @param uid {string} - the UID of the User
+     * @param followedUid {string} - the UID of the User that may be followed by other User
+     * @return {Promise<boolean>} returns if the user with UID uid is being followed by User with UID following
+     */
+    userIsFollowingUser(following_uid: string, followedUid: string): Promise<boolean>;
+
 }
