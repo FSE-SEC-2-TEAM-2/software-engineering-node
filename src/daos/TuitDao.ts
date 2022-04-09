@@ -27,12 +27,12 @@ export class TuitDao implements TuitDaoI {
         return this.tuitDao;
     }
 
-    public async createTuit(tuit: Tuit): Promise<Tuit> {
+    public async createTuit(tuit: Tuit): Promise<Tuit | null> {
         return TuitModel
             .create(tuit);
     }
 
-    public async createTuitByUser(tuit: Tuit, uid: string): Promise<Tuit> {
+    public async createTuitByUser(tuit: Tuit, uid: string): Promise<Tuit | null> {
         tuit.postedBy = await UserDao.getInstance()
             .findUserById(uid);
         return TuitModel
@@ -50,14 +50,14 @@ export class TuitDao implements TuitDaoI {
             .populate("postedBy", {password: 0});
     }
 
-    public async findTuitById(tid: string): Promise<Tuit> {
+    public async findTuitById(tid: string): Promise<any> {
         return TuitModel
             .findById(tid)
             .populate("postedBy", {password: 0});
     }
 
     public async findTuitsByUser(uid: string): Promise<Tuit[]> {
-        const user: User = await UserDao.getInstance()
+        const user: User | null = await UserDao.getInstance()
             .findUserById(uid);
 
         return TuitModel

@@ -83,7 +83,7 @@ export class UserController implements UserControllerI {
         console.info(`user: findUserById(${req.params.uid})`)
 
         UserController.userDao.findUserById(req.params.uid)
-            .then((user: User) => res.json(user))
+            .then((user) => res.json(user))
             .catch((status) => res.json(status));
     }
 
@@ -91,7 +91,7 @@ export class UserController implements UserControllerI {
         console.info(`user: findUserByUsername(${req.params.uname})`)
 
         UserController.userDao.findUserByUsername(req.params.uname)
-            .then((user: User) => res.json(user))
+            .then((user) => res.json(user))
             .catch((status) => res.json(status));
     }
 
@@ -99,7 +99,7 @@ export class UserController implements UserControllerI {
         console.info(`user: findUserByCredentials(${req.body.username}, ${req.body.password})`)
 
         UserController.userDao.findUserByCredentials(req.body.username, req.body.password)
-            .then((user: User) => res.json(user))
+            .then((user) => res.json(user))
             .catch((status) => res.json(status));
     }
 

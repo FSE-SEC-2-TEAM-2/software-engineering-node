@@ -21,6 +21,8 @@ export interface BookmarkControllerI {
      */
     userBookmarksTuit(req: Request, res: Response): void;
 
+    userTogglesBookmark(req: Request, res: Response): void;
+
     /**
      * Records a {@link Tuit} unbookmarked by a {@link User}
      * @param req {Request} - request containing the User's uid and the Tuit's tid involved in the unbookmarking.

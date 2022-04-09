@@ -66,7 +66,7 @@ export class TuitController implements TuitControllerI {
         console.info(`tuit: createTuit() ${req.body}`)
 
         TuitController.tuitDao.createTuit(req.body)
-            .then((tuit: Tuit) => res.json(tuit))
+            .then((tuit) => res.json(tuit))
             .catch((status) => res.json(status));
     }
 
@@ -78,7 +78,7 @@ export class TuitController implements TuitControllerI {
 
 
         TuitController.tuitDao.createTuitByUser(req.body, uid)
-            .then((tuit: Tuit) => res.json(tuit))
+            .then((tuit) => res.json(tuit))
             .catch((status) => res.json(status));
     }
 
@@ -94,7 +94,7 @@ export class TuitController implements TuitControllerI {
         console.info(`tuit: findAllTuits()`)
 
         TuitController.tuitDao.findAllTuits()
-            .then((tuits: Tuit[]) => res.json(tuits))
+            .then((tuits) => res.json(tuits))
             .catch((status) => res.json(status));
     }
 
@@ -102,7 +102,7 @@ export class TuitController implements TuitControllerI {
         console.info(`tuit: findTuitById(${req.params.tid})`)
 
         TuitController.tuitDao.findTuitById(req.params.tid)
-            .then((tuit: Tuit) => res.json(tuit))
+            .then((tuit) => res.json(tuit))
             .catch((status) => res.json(status));
     }
 
@@ -114,7 +114,7 @@ export class TuitController implements TuitControllerI {
 
 
         TuitController.tuitDao.findTuitsByUser(uid)
-            .then((tuits: Tuit[]) => res.json(tuits))
+            .then((tuits) => res.json(tuits))
             .catch((status) => res.json(status));
     }
 
