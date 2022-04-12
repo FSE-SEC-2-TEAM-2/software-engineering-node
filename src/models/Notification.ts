@@ -18,4 +18,6 @@ export interface Notification {
     predicate_type: string
 
     recipient: User
+
+    NotifiedOn:  Date;
 }

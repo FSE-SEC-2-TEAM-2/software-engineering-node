@@ -13,4 +13,5 @@ export const NotificationSchema = new mongoose.Schema({
     predicate_type: {type: String, required: true},
 
     recipient: {type: mongoose.Schema.Types.ObjectId, ref: "UserModel"},
+    NotifiedOn: {type: Date, default: Date.now},
 }, {collection: "notifications"})

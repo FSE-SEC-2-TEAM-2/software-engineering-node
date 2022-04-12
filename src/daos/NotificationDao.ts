@@ -103,7 +103,7 @@ export class NotificationDao implements NotificationDaoI {
             });
     }
 
-    public async findNotificationsForUser(uid: string): Promise<Notification[]> {
+    public async findNotificationsForUser(uid: string): Promise<any> {
         return NotificationModel
             .find({recipient: uid})
             .populate({
@@ -121,6 +121,7 @@ export class NotificationDao implements NotificationDaoI {
             .populate({
                 path: 'predicate_tid',
                 model: TuitModel,
-            });
+            })
+            .sort([['NotifiedOn', -1]])
     }
 }
