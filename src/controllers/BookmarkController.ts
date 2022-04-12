@@ -87,7 +87,7 @@ export class BookmarkController implements BookmarkControllerI {
                 await BookmarkController.bookmarkDao.userBookmarksTuit(userId, tid);
 
                 const notification = {
-                    subject_uid: uid,
+                    subject_uid: userId,
                     subject_type: "user",
                     predicate_tid: tid,
                     predicate_type: "tuit",

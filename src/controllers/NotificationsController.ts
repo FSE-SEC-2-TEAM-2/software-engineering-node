@@ -78,7 +78,7 @@ export class NotificationsController implements NotificationControllerI {
 
         if (userId !== 'session') {
             NotificationsController.notificationDao
-                .findNotificationsForUser(req.params.uid)
+                .findNotificationsForUser(userId)
                 .then((notifications) => res.json(notifications))
                 .catch((status) => res.json(status));
         } else {
