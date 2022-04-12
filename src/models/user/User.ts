@@ -23,6 +23,7 @@ import {Location} from "./Location";
  * @property {Location | null} location the user's Location
  */
 export interface User {
+    _id: string;
     username: string;
     password: string;
     firstName: string | null;
