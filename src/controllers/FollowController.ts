@@ -85,7 +85,10 @@ export class FollowController implements FollowControllerI {
 
         FollowController.followDao
             .findAllUsersThatFollowUser(req.params.uid)
-            .then((follow) => res.json(follow))
+            .then((follow) => {
+                console.info(`following instances: ${follow}`);
+                return res.json(follow);
+            })
             .catch((status) => res.json(status));
     }
 
@@ -106,7 +109,7 @@ export class FollowController implements FollowControllerI {
                     .userFollowsUser(req.params.followed_uid, req.params.following_uid)
                     .then((follow: Follow) => res.json(follow))
                     .catch((status) => res.json(status));
-        });
+        }).catch((status) => res.json(status));
     }
 
     /**
