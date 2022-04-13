@@ -12,7 +12,7 @@ export interface UserDaoI {
      * @param user {User} - the data to be used to create the User
      * @return {Promise<User>} - promise containing the User created with the given data
      */
-    createUser(user: User): Promise<User>;
+    createUser(user: User): Promise<User | null>;
 
     /**
      * Returns all the {@link User}s
@@ -25,7 +25,7 @@ export interface UserDaoI {
      * @param uid {string} - the UID of the User to be returned
      * @return {Promise<User>} - promise containing the User with the given UID
      */
-    findUserById(uid: string): Promise<User>;
+    findUserById(uid: string): Promise<User | null>;
 
     /**
      * Returns the {@link User} with the given UID and password
@@ -33,14 +33,14 @@ export interface UserDaoI {
      * @param password {string} - the password of the User to be returned
      * @return {Promise<User>} - promise containing the User with the given UID and password
      */
-    findUserByCredentials(uid: string, password: string): Promise<User>;
+    findUserByCredentials(uid: string, password: string): Promise<User | null>;
 
     /**
      * Returns the {@link User} with the given Username
      * @param username {string} - the Username of the User to be returned
      * @return {Promise<User>} - promise containing the User with the given UID
      */
-    findUserByUsername(username: string): Promise<User>;
+    findUserByUsername(username: string): Promise<User | null>;
 
     /**
      * Updates the {@link User} with their UID and returns the updated User
