@@ -6,6 +6,8 @@ import bodyParser from "body-parser";
 import {TuitDao} from "../daos/TuitDao";
 import {TuitControllerI} from "../interfaces/tuit/TuitControllerI";
 import {Tuit} from "../models/Tuit";
+import {FollowDao} from "../daos/FollowDao";
+import {NotificationDao} from "../daos/NotificationDao";
 
 /**
  * @class TuitController Implements RESTful Web service API for {@link Tuit} resource.
@@ -78,7 +80,28 @@ export class TuitController implements TuitControllerI {
 
 
         TuitController.tuitDao.createTuitByUser(req.body, uid)
-            .then((tuit) => res.json(tuit))
+            .then(async (tuit) => {
+                res.json(tuit);
+
+                if (tuit) {
+                    const following_users = await FollowDao.getInstance().findAllUsersThatFollowUser(uid)
+
+                    for (const follow of following_users) {
+                        if (tuit.postedBy) {
+                            const notification = {
+                                subject_tid: tuit._id,
+                                subject_type: "tuit",
+                                predicate_uid: tuit.postedBy._id,
+                                predicate_type: "user",
+                                recipient: follow.userFollowing._id,
+                                verb: "tuited by"
+                            }
+
+                            await NotificationDao.getInstance().createNotification(notification)
+                        }
+                    }
+                }
+            })
             .catch((status) => res.json(status));
     }
 

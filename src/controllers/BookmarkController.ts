@@ -6,6 +6,7 @@ import {BookmarkDao} from "../daos/BookmarkDao";
 import {BookmarkControllerI} from "../interfaces/bookmark/BookmarkControllerI";
 import {Bookmark} from "../models/Bookmark";
 import {TuitDao} from "../daos/TuitDao";
+import {NotificationDao} from "../daos/NotificationDao";
 
 /**
  * @class BookmarkController Implements RESTful Web service API for {@link Bookmark} resource.
@@ -84,6 +85,16 @@ export class BookmarkController implements BookmarkControllerI {
                 await BookmarkController.bookmarkDao.userUnbookmarksTuits(userId, tid);
             } else {
                 await BookmarkController.bookmarkDao.userBookmarksTuit(userId, tid);
+
+                const notification = {
+                    subject_uid: userId,
+                    subject_type: "user",
+                    predicate_tid: tid,
+                    predicate_type: "tuit",
+                    recipient: tuit.postedBy._id,
+                    verb: "bookmarked"
+                }
+                await NotificationDao.getInstance().createNotification(notification)
             }
 
             tuit.stats.bookmarks = await BookmarkController.bookmarkDao.countBookmarkedUsers(tid);
