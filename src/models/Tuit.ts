@@ -11,6 +11,7 @@ import {User} from "./user/User";
  * @property {Date} postedOn - the Date this Tuit was posted
  */
 export interface Tuit {
+    _id: string;
     tuit: string;
     postedOn: Date;
     postedBy: User | null;

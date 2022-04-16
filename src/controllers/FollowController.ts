@@ -5,6 +5,7 @@ import {Express, Request, Response} from "express";
 import {FollowDao} from "../daos/FollowDao";
 import {FollowControllerI} from "../interfaces/follow/FollowControllerI";
 import {Follow} from "../models/Follow";
+import {NotificationDao} from "../daos/NotificationDao";
 
 /**
  * @class FollowController Implements RESTful Web service API for {@link Follow} resource.
@@ -107,7 +108,29 @@ export class FollowController implements FollowControllerI {
             .userUnfollowsUser(req.params.followed_uid, req.params.following_uid).then(() => {
                 FollowController.followDao
                     .userFollowsUser(req.params.followed_uid, req.params.following_uid)
-                    .then((follow: Follow) => res.json(follow))
+                    .then(async (follow: Follow) => {
+                        res.json(follow)
+
+                        const notification = {
+                            subject_uid: req.params.following_uid,
+                            subject_type: "user",
+                            predicate_uid: req.params.followed_uid,
+                            predicate_type: "user",
+                            recipient: req.params.followed_uid,
+                            verb: "followed"
+                        }
+                        // const notification = {
+                        //     subject: req.params.following_uid,
+                        //     subject_type: "user",
+                        //     predicate: req.params.followed_uid,
+                        //     predicate_type: "user",
+                        //     recipient: req.params.followed_uid,
+                        //     verb: "followed"
+                        // }
+                        await NotificationDao.getInstance().createNotification(notification)
+                        console.log("posted Notifications")
+                        console.log(notification)
+                    })
                     .catch((status) => res.json(status));
         }).catch((status) => res.json(status));
     }
